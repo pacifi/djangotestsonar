@@ -36,10 +36,23 @@ steps:
       print('Found Django project in', project_location)
       print('##vso[task.setvariable variable=projectRoot]{}'.format(project_location))
 
-
-
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: "**/TEST-*.xml"
     testRunTitle: 'Python $(PYTHON_VERSION)'
   condition: succeededOrFailed()
+
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'Sonar Connect'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'DjangoTest'
+    cliProjectName: 'DjangoTest'
+    cliSources: '.'
+
+- task: SonarQubeAnalyze@5
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'

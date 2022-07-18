@@ -42,14 +42,21 @@ steps:
     testRunTitle: 'Python $(PYTHON_VERSION)'
   condition: succeededOrFailed()
 
+#- task: SonarQubePrepare@5
+#  inputs:
+#    SonarQube: 'Sonar Connect'
+#    scannerMode: 'CLI'
+#    configMode: 'manual'
+#    cliProjectKey: 'DjangoTest'
+#    cliProjectName: 'DjangoTest'
+#    cliSources: '.'
+
+
 - task: SonarQubePrepare@5
   inputs:
     SonarQube: 'Sonar Connect'
     scannerMode: 'CLI'
-    configMode: 'manual'
-    cliProjectKey: 'DjangoTest'
-    cliProjectName: 'DjangoTest'
-    cliSources: '.'
+    configMode: 'file'
 
 - task: SonarQubeAnalyze@5
 
